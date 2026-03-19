@@ -1,0 +1,5 @@
+name: NSB Plugin Examples
+type: module
+description: Examples of common Drupal plugin types.
+package: Custom
+core_version_requirement: ^10 || ^11
