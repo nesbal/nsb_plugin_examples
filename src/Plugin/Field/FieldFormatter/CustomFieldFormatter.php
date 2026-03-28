@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\nsb_drupal_basic_module\Plugin\Field\FieldFormatter;
+namespace Drupal\nsb_plugin_examples\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
