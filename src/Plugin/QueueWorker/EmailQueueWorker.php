@@ -13,14 +13,14 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a queue worker example that sends emails.
+ * Provides an email notification queue worker.
  */
 #[QueueWorker(
-  id: "nsb_custom_queue_worker",
-  title: new TranslatableMarkup("Custom queue worker"),
+  id: "nsb_email_queue_worker",
+  title: new TranslatableMarkup("Email notifications"),
   cron: ["time" => 60]
 )]
-class CustomQueueWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+class EmailQueueWorker extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**
    * The mail manager.
@@ -37,10 +37,10 @@ class CustomQueueWorker extends QueueWorkerBase implements ContainerFactoryPlugi
    */
   public function __construct(
     array $configuration,
-          $plugin_id,
-          $plugin_definition,
+    $plugin_id,
+    $plugin_definition,
     MailManagerInterface $mail_manager,
-    LoggerInterface $logger
+    LoggerInterface $logger,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->mailManager = $mail_manager;
@@ -74,11 +74,12 @@ class CustomQueueWorker extends QueueWorkerBase implements ContainerFactoryPlugi
 
     $result = $this->mailManager->mail(
       'nsb_plugin_examples',
-      'example',
+      'notification',
       $data['email'],
-      'en',
+      $data['langcode'] ?? 'en',
       [
-        'message' => 'Hello from QueueWorker',
+        'subject' => $data['subject'] ?? 'Notification',
+        'message' => $data['message'] ?? 'You have a new notification.',
       ],
     );
 
