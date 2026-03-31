@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Defines Views data for custom fields and filters.
+ */
+
+/**
  * Implements hook_views_data().
  */
 function nsb_plugin_examples_views_data(): array {
